@@ -1,0 +1,11 @@
+{
+    "mongo": {
+        "uri": "mongodb://localhost/",
+        "port": 27017,
+        "debug": true,
+        "dbtable": "karma"
+    },
+    "app": {
+        "port": 3000
+    }
+}

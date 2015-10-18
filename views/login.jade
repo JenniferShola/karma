@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1.
+        User List
+    ul
+        each user, i in loginlist
+            li
+                p My email is #{user.email} and my username is #{user.name}! The object user is #{user}.

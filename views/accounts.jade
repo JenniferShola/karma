@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1. 
+        Account List
+    ul  
+        each acct, i in acctlist
+            li  
+                p My username is #{acct.username} and my password is #{acct.password}! The object account is #{acct}.
