@@ -12,6 +12,8 @@ var db = monk('localhost:27017/karma');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var accounts = require('./routes/accounts');
+var connections = require('./routes/connections');
+var interactions = require('./routes/interactions');
 
 var app = express();
 
@@ -36,6 +38,8 @@ app.use(function(req,res,next){
 app.use('/', routes);
 app.use('/users', users);
 app.use('/accounts', accounts);
+app.use('/connections', connections);
+app.use('/interactions', interactions);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

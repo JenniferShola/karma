@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1. 
+        Interactions List
+    ul  
+        each interact, i in interactionlist
+            li  
+                p My name is #{interact.title}.
+                p My user is #{interact.to_user_id}.
+                p My connection is #{interact.connection_id}.
+                p The interaction object is #{interact}.

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1. 
+        User List
+    ul  
+        each user, i in userlist
+            li  
+                p My username is #{user.username}.
+                p My name is #{user.name}.
+                p The user object is #{user}.

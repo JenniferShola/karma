@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1. 
+        Connections List
+    ul  
+        each c, i in connectionlist
+            li  
+                p My name is #{c.name}.
+                p My user is #{c.to_user_id}.
+                p The connection object is #{c}.

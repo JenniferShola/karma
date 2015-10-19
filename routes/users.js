@@ -8,8 +8,8 @@ router.get('/:id', function(req, res) {
         if( err ) {
             res.send("There was a problem adding the information to the database.");
         } else {
-	    res.render('login', {
-                "loginlist" : [doc]
+	    res.render('users', {
+                "userlist" : [doc]
             }); 
         }
     });
@@ -21,8 +21,8 @@ router.get('/', function(req, res) {
         if( err ) {
             res.send("There was a problem adding the information to the database.");
         } else {
-	    res.render('login', {
-                "loginlist" : docs
+	    res.render('users', {
+                "userlist" : docs
             }); 
         }
     });
@@ -31,9 +31,9 @@ router.get('/', function(req, res) {
 /* PUT User By Id. */
 router.put('/:id', function(req, res) {
     UserModel.update({username: req.params.id}, { 
-       name: req.headers['name'],
-       profession: req.headers['profession'],
-       email: req.headers['email'],
+        name: req.headers['name'],
+        profession: req.headers['profession'],
+        email: req.headers['email'],
     }, function(err, doc) {
         if( err ) {
             console.log('update not successful', err);
@@ -66,8 +66,8 @@ router.post('/', function(req, res) {
             console.log('update not successful', err);
             res.send("There was a problem adding the information to the database.");
         } else {
-	    res.render('login', {
-                "loginlist" : [doc]
+	    res.render('user', {
+                "userlist" : [doc]
             }); 
         }
     });
