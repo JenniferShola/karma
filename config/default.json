@@ -1,9 +1,9 @@
 {
     "mongo": {
-        "uri": "mongodb://localhost/",
-        "port": 27017,
-        "debug": true,
-        "dbtable": "karma"
+        "uri": "mongodb://admin:test@ds053894.mongolab.com",
+	"port": 53894,
+	"dbtable": "karma-prod",
+        "debug": true
     },
     "app": {
         "port": 3000
