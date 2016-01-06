@@ -21,9 +21,7 @@ router.get('/', function(req, res) {
         if( err ) {
             res.send("There was a problem adding the information to the database.");
         } else {
-	    res.render('users', {
-                "userlist" : docs
-            }); 
+            res.send(docs);
         }
     });
 });
@@ -51,12 +49,14 @@ router.put('/:id', function(req, res) {
 router.post('/', function(req, res) {
     
     var data = {
-        name : 'temp name',
-	username : req.headers['username'],
-        profession: 'doctor',
+        name : req.headers['name'],
+	    username : req.headers['username'],
+        profession: req.headers['profession'],
         email: req.headers['email'],
-        location: 'SF',
-        contact_type: 'Gold'
+        location: req.headers['location'],
+        photo: req.headers['photo'],
+        contact_type: req.headers['contact_type'],
+        phone_number: req.headers['phone_number']
     };
 
     var user = new UserModel(data);

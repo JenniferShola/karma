@@ -11,6 +11,7 @@ var properties = {
     profession:		{type: String, required: false, unique: false},
     email:		{type: String, required: false, unique: false},
     location:		{type: String, required: false, unique: false},
+    photo:		{type: String, required: true, unique: false},
     contact_type:	{type: String, required: true, unique: false},
     signup:		{type: Number, required: false, default: Date.now},
     last_signin:	{type: Number, required: false, default: Date.now},
