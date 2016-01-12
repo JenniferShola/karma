@@ -21,6 +21,7 @@ Mongoose: interactions.ensureIndex({ to_user_id: 1 }) { unique: true, background
 ### Helpful Downloads 
 1. [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en)
 2. [JSONView](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc?hl=en)
+3. [Kibana](https://www.elastic.co/guide/en/kibana/current/setup.html)
 
 ## Run the project
 1. Open Chrome and navigate to http://localhost:3000/
@@ -31,3 +32,11 @@ Mongoose: interactions.ensureIndex({ to_user_id: 1 }) { unique: true, background
 ..* Accounts
 3. All endpoints support GET, DELETE, PUT, POST and OPTIONS
 4. DELETE Requests must include safedelete or the entity will not be deleted from the db.
+
+##Setting up Sense for ElasticSearch
+1. Download Kibana at https://www.elastic.co/guide/en/kibana/current/setup.html
+2. Install Sense plugin
+..* In terminal run: './bin/kibana plugin --install elastic/sense'
+3. Start Kibana
+..* In terminal run: './bin/kibana'
+4. Access Sense UI at: http://localhost:5601/app/sense

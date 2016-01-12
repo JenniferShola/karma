@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var UserModel = require('./../models/user');
+var client = require('./../models/es-client');
+// var elasticsearch = require('elasticsearch');
 
 /* GET User By Id. */
 router.get('/:id', function(req, res) {
@@ -47,7 +49,8 @@ router.put('/:id', function(req, res) {
 
 /* POST New User. */
 router.post('/', function(req, res) {
-    
+
+    // add new user to db
     var data = {
         name : req.headers['name'],
 	    username : req.headers['username'],
@@ -60,23 +63,50 @@ router.post('/', function(req, res) {
     };
 
     var user = new UserModel(data);
+    var userAsJSON = JSON.stringify(data);
+    var successful = null;
+    var error_msg = "";
 
     user.save(function(err, doc) {
         if (err) {
-            console.log('update not successful', err);
+            console.log('User update not successful in db.', err);
             res.send("There was a problem adding the information to the database.");
         } else {
-	    res.render('users', {
-                "userlist" : [doc]
-            }); 
+            successful = doc
         }
     });
+
+    // add new user to search index
+    client().index({
+      index: 'blog',
+      type: 'post',
+      id: user.username,
+      body: userAsJSON
+    }, function (err, resp) {
+        if (err) {
+            console.log('User update to search index was not successful', err);
+            resp.send("There was a problem adding the information to the search index.");
+        } else {
+            console.log("This is the successful response I get from the search Index: ", resp);
+        }
+    });
+
+    if(successful != null) {
+        res.render('users', {
+            "userlist" : [successful]
+        });  
+    } else {
+        res.send("There is some unknown problem that returned a null object to us.");
+    }
+
 });
 
 /* DELETE User By Id. */
 router.delete('/:id', function(req, res) {
     var safe_delete = req.headers['safedelete'];
     if (safe_delete == 'yes') {
+
+        // remove user from db
         UserModel.remove({username: req.params.id}, function(err, doc) {
             if( err ) {
                 console.log('update not successful', err);
@@ -88,6 +118,23 @@ router.delete('/:id', function(req, res) {
                 }); 
             }
         });
+
+        // remove user from search index
+        client().delete({
+          index: 'blog',
+          type: 'post',
+          id: req.params.id,
+          ignore: [404]
+        }).then(function (body) {
+          // since we told the client to ignore 404 errors, the
+          // promise is resolved even if the index does not exist
+          console.log('index was deleted or never existed');
+        }, function (error) {
+          // oh no!
+          console.log('there was an error - index was not deleted');
+        });
+
+
     } else {
 	res.render('index', {
             "title" : "Welcome to Karma!",

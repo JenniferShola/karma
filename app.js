@@ -17,6 +17,8 @@ var interactions = require('./routes/interactions');
 
 var app = express();
 
+var client = require('./models/es-client');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
