@@ -6,15 +6,16 @@ var Schema = mongoose.Schema;
 var Types = Schema.Types;
 
 var properties = { 
-    to_user_id:         {type: Number, required: true, unique: true},
-    connection_id:      {type: Number, required: true, unique: true},
+    to_user_id:         {type: String, required: true, unique: true},
+    connection_id:      {type: String, required: true, unique: true},
     title:              {type: String, required: true, unique: false},
     description:        {type: String, required: true, unique: false},
-    content:            {type: String, required: false, unique: false},
     action:             {type: Number, required: true, unique: false}, 
     created_time:       {type: Number, required: false, default: Date.now},
     action_time:        {type: Number, required: false, unique: false},
-    location:           {type: String, required: false, unique: false}
+    location:           {type: String, required: false, unique: false},
+    tags:           	{type: String, required: false, unique: false},
+    notes:           	{type: String, required: false, unique: false}
 };
 
 var definition = new Schema(properties);

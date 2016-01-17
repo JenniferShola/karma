@@ -32,9 +32,7 @@ router.get('/', function(req, res) {
             if( err ) { 
                 res.send("There was a problem adding the information to the database.");
             } else {
-                res.render('interactions', {
-                   "interactionlist" : docs
-                }); 
+                res.send(docs);
             }
         }); 
     }
@@ -61,15 +59,18 @@ router.put('/id', function(req, res) {
 router.post('/', function(req, res) {
 
     var data = {
-        title: 'Email Followup with Cassidy',
-        description: 'some description',
-        to_user_id: '5623b3cc953404ca344bef3b',
-        connection_id: '5623b3cc953404ca344bef3b',
-        name : 'interaction name',
-        contact_type: 'Gold'
+        to_user_id:         req.headers['to_user_id'],
+        connection_id:      req.headers['connection_id'],
+        title:              req.headers['title'],
+        description:        req.headers['description'],
+        action:             req.headers['action'],
+        action_time:        req.headers['action_time'],
+        location:           req.headers['location'],
+        tags:               req.headers['tags'],
+        notes:              req.headers['notes']
     };
 
-    var interaction = new InteractionModel(data);
+    var interaction = new InteractionsModel(data);
 
     interaction.save(function(err, doc) {
         if (err) {
@@ -87,7 +88,7 @@ router.post('/', function(req, res) {
 router.delete('/id', function(req, res) {
     var safe_delete = req.headers['safedelete'];
     if (safe_delete == 'yes') {
-        InteractionModel.remove({ _id: req.headers['id'] }, function(err, doc) {
+        InteractionsModel.remove({ _id: req.headers['id'] }, function(err, doc) {
             if( err ) {
                 console.log('update not successful', err);
                 res.send("There was a problem updating the information to the database.");

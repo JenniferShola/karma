@@ -34,7 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req,res,next){
     res.header("Access-Control-Allow-Origin", "*"); 
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, safedelete, email, username, profession, name, phone_number, contact_type, location, photo"); 
+    res.header("Access-Control-Allow-Headers", 
+      "Origin, X-Requested-With, Content-Type, Accept, to_user_id, connection_id, title, description, action, action_time, tags, notes, safedelete, email, username, profession, name, phone_number, contact_type, location, photo"); 
     req.db = db;
     next();
 });
