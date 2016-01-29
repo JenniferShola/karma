@@ -10,6 +10,7 @@ var monk = require('monk');
 var db = monk('admin:test@ds053894.mongolab.com:53894/karma-prod');
 
 var routes = require('./routes/index');
+var tasks = require('./routes/tasks');
 var users = require('./routes/users');
 var accounts = require('./routes/accounts');
 var connections = require('./routes/connections');
@@ -43,6 +44,7 @@ app.use(function(req,res,next){
 });
 
 app.use('/', routes);
+app.use('/tasks', tasks);
 app.use('/users', users);
 app.use('/accounts', accounts);
 app.use('/connections', connections);
