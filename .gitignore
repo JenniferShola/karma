@@ -1,3 +1,6 @@
 .DS_Store
 *.js.swp
 data*
+.idea*
+.idea/*
+*.idea

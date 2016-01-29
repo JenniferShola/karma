@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var Types = Schema.Types;
 
 var properties = { 
+	_creator:           { type: String, ref: 'users', required: true, unique: false},
     username:           {type: String, required: true, unique: true},
     password:           {type: String, required: true, unique: false},
     signup:             {type: Number, required: false, default: Date.now},

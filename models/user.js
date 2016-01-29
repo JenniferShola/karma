@@ -6,16 +6,19 @@ var Schema = mongoose.Schema;
 var Types = Schema.Types;
 
 var properties = {
-    name:		{type: String, required: true, unique: false},
+    id:             {type: Number, required: true, unique: true},
+    name:		    {type: String, required: true, unique: false},
     username:		{type: String, required: true, unique: true},
     profession:		{type: String, required: false, unique: false},
-    email:		{type: String, required: false, unique: false},
+    email:		    {type: String, required: false, unique: false},
     location:		{type: String, required: false, unique: false},
-    photo:		{type: String, required: true, unique: false},
+    photo:		    {type: String, required: true, unique: false},
     contact_type:	{type: String, required: true, unique: false},
-    signup:		{type: Number, required: false, default: Date.now},
+    signup:		    {type: Number, required: false, default: Date.now},
     last_signin:	{type: Number, required: false, default: Date.now},
-    phone_number:	{type: Number, required: false, unique: false}
+    phone_number:	{type: Number, required: false, unique: false},
+    friends:        [{ type: String, ref: 'users' }],
+    feed:           [{ type: String, ref: 'interactions' }]
 };
 
 var definition = new Schema(properties);

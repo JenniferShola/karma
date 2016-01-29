@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var InteractionModel = require('./../models/interaction');
+var TaskModel = require('./../models/task');
 
-/* GET Interaction By Id. */
+/* GET task By Id. */
 router.get('/:id', function(req, res) {
-    InteractionModel
+    TaskModel
         .findOne({_id: req.params.id})
         .exec(function(err, doc) {
             if( err ) { 
@@ -16,9 +16,9 @@ router.get('/:id', function(req, res) {
     ); 
 });
 
-/* GET Interactions For All User Ids. */
+/* GET tasks For All User Ids. */
 router.get('/', function(req, res) {
-    InteractionModel
+    TaskModel
         .find({})
         .exec(function(err, docs) {
             if( err ) { 
@@ -30,9 +30,9 @@ router.get('/', function(req, res) {
     ); 
 });
 
-/* GET Interactions For User Id. */
+/* GET Tasks For User Id. */
 router.get('/user/:id', function(req, res) {
-    InteractionModel
+    TaskModel
         .find({_creator: req.params.id})
         .exec(function(err, doc) {
             if( err ) { 
@@ -45,9 +45,9 @@ router.get('/user/:id', function(req, res) {
     ); 
 });
 
-/* GET Interactions For User Id with User Detail. */
+/* GET Tasks For User Id with User Detail. */
 router.get('/user/:id/detailed', function(req, res) {
-    InteractionModel
+    TaskModel
         .find({_creator: req.params.id})
         .populate('_creator', 'name photo contact_type')
         .exec(function(err, docs) {
@@ -60,13 +60,10 @@ router.get('/user/:id/detailed', function(req, res) {
     ); 
 });
 
-/* PUT Interaction By Id. */
+/* PUT Task By Id. */
 router.put('/:id', function(req, res) {
-    InteractionModel.update({_id : req.params.id}, {
+    TaskModel.update({_id : req.params.id}, {
         name: req.headers['name'],
-        photo: req.headers['photo'],
-        source: req.headers['location'],
-        description: req.headers['notes']
     }, function(err, doc) {
         if( err ) {
             console.log('update not successful', err);
@@ -80,46 +77,46 @@ router.put('/:id', function(req, res) {
     });
 });
 
-/* POST New Interaction. */
+/* POST New Task. */
 router.post('/', function(req, res) {
 
     var data = {
-        _creator:         req.headers['creator'],
+        _creator:           req.headers['creator'],
+        _receiver:          req.headers['receiver'],
         title:              req.headers['title'],
         description:        req.headers['description'],
         action:             req.headers['action'],
         action_time:        req.headers['action_time'],
         location:           req.headers['location'],
-        tags:               req.headers['tags'],
         notes:              req.headers['notes']
     };
 
-    var interaction = new InteractionModel(data);
+    var task = new TaskModel(data);
 
-    interaction.save(function(err, doc) {
+    task.save(function(err, doc) {
         if (err) {
             console.log('update not successful', err);
             res.send("There was a problem adding the information to the database.");
         } else {
-            res.render('interactions', {
-                "interactionlist" : [doc]
+            res.render('tasks', {
+                "tasklist" : [doc]
             });
         }
     });
 });
 
-/* DELETE Interaction By Id. */
+/* DELETE Task By Id. */
 router.delete('/:id', function(req, res) {
     var safe_delete = req.headers['safedelete'];
     if (safe_delete == 'yes') {
-        InteractionModel.remove({ _id: req.params.id }, function(err, doc) {
+        TaskModel.remove({ _id: req.params.id }, function(err, doc) {
             if( err ) {
                 console.log('update not successful', err);
                 res.send("There was a problem updating the information to the database.");
             } else {
                 res.render('index', {
                     "title" : "Welcome to Karma!",
-                    "body" : "Delete Interaction Completed!"
+                    "body" : "Delete task Completed!"
                 });
             }
         });

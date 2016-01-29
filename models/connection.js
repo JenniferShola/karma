@@ -6,8 +6,8 @@ var Schema = mongoose.Schema;
 var Types = Schema.Types;
 
 var properties = { 
-    to_user_id:         {type: String, required: true, unique: true},
-    linked_user_ids:    {type: Object, required: false, unique: false}, // Array of user ids
+    _creator:           { type: String, ref: 'users', required: true, unique: false},
+    receivers:          [{ type: String, ref: 'users', required: true, unique: false}],
     name:               {type: String, required: true, unique: false},
     profession:         {type: String, required: false, unique: false},
     email:              {type: String, required: false, unique: false},

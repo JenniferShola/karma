@@ -8,9 +8,7 @@ router.get('/:id', function(req, res) {
         if( err ) {
             res.send("There was a problem adding the information to the database.");
         } else {
-	    res.render('users', {
-                "userlist" : [doc]
-            }); 
+            res.send(doc);
         }
     });
 });
@@ -37,7 +35,7 @@ router.put('/:id', function(req, res) {
             console.log('update not successful', err);
             res.send("There was a problem updating the information to the database.");
         } else {
-	    res.render('index', {
+	       res.render('index', {
                 "title" : "Welcome to Karma!",
                 "body" : "Put Completed!"
             }); 
@@ -66,7 +64,7 @@ router.post('/', function(req, res) {
             console.log('update not successful', err);
             res.send("There was a problem adding the information to the database.");
         } else {
-	    res.render('users', {
+	       res.render('users', {
                 "userlist" : [doc]
             }); 
         }
@@ -82,14 +80,14 @@ router.delete('/:id', function(req, res) {
                 console.log('update not successful', err);
                 res.send("There was a problem updating the information to the database.");
             } else {
-	        res.render('index', {
+	            res.render('index', {
                     "title" : "Welcome to Karma!",
                     "body" : "Delete User Completed!"
                 }); 
             }
         });
     } else {
-	res.render('index', {
+	    res.render('index', {
             "title" : "Welcome to Karma!",
             "body" : "Safe Delete Not On. Delete Not Completed!"
         }); 
