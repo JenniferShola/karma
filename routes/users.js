@@ -50,14 +50,14 @@ router.post('/', function(req, res) {
 
     // add new user to db
     var data = {
-        name : req.headers['name'],
-	    username : req.headers['username'],
-        profession: req.headers['profession'],
-        email: req.headers['email'],
-        location: req.headers['location'],
-        photo: req.headers['photo'],
-        contact_type: req.headers['contact_type'],
-        phone_number: req.headers['phone_number']
+        name : req.body.name,
+	    username : req.body.username,
+        profession: req.body.profession,
+        email: req.body.email,
+        location: req.body.location,
+        photo: req.body.photo,
+        contact_type: req.body.contact_type,
+        phone_number: req.body.phone_number
     };
 
     var user = new UserModel(data);

@@ -3,7 +3,7 @@ var router = express.Router();
 var ConnectionsModel = require('./../models/connection');
 
 /* GET Connection By Id. */
-router.get('/id', function(req, res) {
+router.get('/:id', function(req, res) {
     ConnectionsModel.findOne({_id: req.params.id}).exec(function(err, doc) {
         if( err ) { 
             res.send("There was a problem adding the information to the database.");
@@ -55,10 +55,10 @@ router.get('/', function(req, res) {
 
 /* PUT Connection By Id. */
 router.put('/id/:id', function(req, res) {
-    ConnectionsModel.update({connectionname: req.params.id}, { 
-        name: req.headers['name'],
-        profession: req.headers['profession'],
-        email: req.headers['email'],
+    ConnectionsModel.update({_id: req.params.id}, {
+        name: req.body.name,
+        profession: req.body.profession,
+        email: req.body.email,
     }, function(err, doc) {
         if( err ) { 
             console.log('update not successful', err);

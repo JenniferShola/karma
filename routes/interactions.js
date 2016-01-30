@@ -84,14 +84,13 @@ router.put('/:id', function(req, res) {
 router.post('/', function(req, res) {
 
     var data = {
-        _creator:         req.headers['creator'],
-        title:              req.headers['title'],
-        description:        req.headers['description'],
-        action:             req.headers['action'],
-        action_time:        req.headers['action_time'],
-        location:           req.headers['location'],
-        tags:               req.headers['tags'],
-        notes:              req.headers['notes']
+        _creator:           req.body.creator,
+        title:              req.body.title,
+        description:        req.body.description,
+        action:             req.body.action,
+        action_time:        req.body.action_time,
+        location:           req.body.location,
+        notes:              req.body.notes
     };
 
     var interaction = new InteractionModel(data);
@@ -110,8 +109,7 @@ router.post('/', function(req, res) {
 
 /* DELETE Interaction By Id. */
 router.delete('/:id', function(req, res) {
-    var safe_delete = req.headers['safedelete'];
-    if (safe_delete == 'yes') {
+    if (req.body.safedelete == 'yes') {
         InteractionModel.remove({ _id: req.params.id }, function(err, doc) {
             if( err ) {
                 console.log('update not successful', err);
