@@ -51,7 +51,7 @@ router.post('/', function(req, res) {
     // add new user to db
     var data = {
         name : req.body.name,
-	    username : req.body.username,
+	      username : req.body.username,
         profession: req.body.profession,
         email: req.body.email,
         location: req.body.location,
@@ -70,7 +70,7 @@ router.post('/', function(req, res) {
             console.log('User update not successful in db.', err);
             res.send("There was a problem adding the information to the database.");
         } else {
-g            successful = doc
+            successful = doc
         }
     });
 
