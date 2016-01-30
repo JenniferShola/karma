@@ -63,10 +63,10 @@ router.get('/user/:id/detailed', function(req, res) {
 /* PUT Interaction By Id. */
 router.put('/:id', function(req, res) {
     InteractionModel.update({_id : req.params.id}, {
-        name: req.headers['name'],
-        photo: req.headers['photo'],
-        source: req.headers['location'],
-        description: req.headers['notes']
+        name: req.body.name,
+        photo: req.body.photo,
+        source: req.body.location,
+        description: req.body.notes
     }, function(err, doc) {
         if( err ) {
             console.log('update not successful', err);
@@ -84,14 +84,14 @@ router.put('/:id', function(req, res) {
 router.post('/', function(req, res) {
 
     var data = {
-        _creator:         req.headers['creator'],
-        title:              req.headers['title'],
-        description:        req.headers['description'],
-        action:             req.headers['action'],
-        action_time:        req.headers['action_time'],
-        location:           req.headers['location'],
-        tags:               req.headers['tags'],
-        notes:              req.headers['notes']
+        _creator:         req.body.creator,
+        title:              req.body.title,
+        description:        req.body.description,
+        action:             req.body.action,
+        action_time:        req.body.action_time,
+        location:           req.body.location,
+        tags:               req.body.tags,
+        notes:              req.body.notes
     };
 
     var interaction = new InteractionModel(data);

@@ -81,14 +81,14 @@ router.put('/:id', function(req, res) {
 router.post('/', function(req, res) {
 
     var data = {
-        _creator:           req.headers['creator'],
-        _receiver:          req.headers['receiver'],
-        title:              req.headers['title'],
-        description:        req.headers['description'],
-        action:             req.headers['action'],
-        action_time:        req.headers['action_time'],
-        location:           req.headers['location'],
-        notes:              req.headers['notes']
+        _creator:           req.body.creator,
+        _receiver:          req.body.receiver,
+        title:              req.body.title,
+        description:        req.body.description,
+        action:             req.body.action,
+        action_time:        req.body.action_time,
+        location:           req.body.location,
+        notes:              req.body.notes
     };
 
     var task = new TaskModel(data);
@@ -107,7 +107,7 @@ router.post('/', function(req, res) {
 
 /* DELETE Task By Id. */
 router.delete('/:id', function(req, res) {
-    var safe_delete = req.headers['safedelete'];
+    var safe_delete = req.body.safedelete;
     if (safe_delete == 'yes') {
         TaskModel.remove({ _id: req.params.id }, function(err, doc) {
             if( err ) {

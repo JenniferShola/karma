@@ -1,12 +1,16 @@
 var express = require('express');
+var app = express();
 var path = require('path');
-var favicon = require('serve-favicon');
+
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var mongo = require('mongodb');
+var morgan = require('morgan');
+var mongoose = require('mongoose');
+var jwt = require('jwt-simple');
 var monk = require('monk');
+var passport = require('./config/init_passport');
+
 var db = monk('admin:test@ds053894.mongolab.com:53894/karma-prod');
 
 var routes = require('./routes/index');
@@ -16,7 +20,18 @@ var accounts = require('./routes/accounts');
 var connections = require('./routes/connections');
 var interactions = require('./routes/interactions');
 
-var app = express();
+app.use(passport.initialize());
+app.use(passport.session());
+
+// get our request parameters
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// log to console
+app.use(logger('dev'));
+
+// Use the passport package in our application
+app.use(passport.initialize());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,9 +39,6 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
