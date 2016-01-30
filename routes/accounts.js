@@ -2,6 +2,30 @@ var express = require('express');
 var router = express.Router();
 var AcctModel = require('./../models/account');
 
+router.post('/authenticate', function(req, res) {
+    AcctModel.findOne({
+        username: req.body.username
+    }, function(err, user) {
+        if (err) throw err;
+
+        if (!user) {
+            res.send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+            // check if password matches
+            user.comparePassword(req.body.password, function (err, isMatch) {
+                if (isMatch && !err) {
+                    // if user is found and password is right create a token
+                    // return the information including token as JSON
+                    res.send({success: true});
+                    //res.send({success: true, token: token});
+                } else {
+                    res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+                }
+            });
+        }
+    });
+});
+
 /* GET Account By Id. */
 router.get('/:username', function(req, res) {
     AcctModel.findOne({username: req.params.username}).exec(function(err, doc) {
