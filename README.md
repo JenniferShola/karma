@@ -4,7 +4,11 @@
 ### Download the project
 1. Clone the project into your dev folder 
 `git clone https://github.com/JenniferShola/karma.git && cd karma`
-2. Run the project 
+2. Run dependancies
+`npm install bson && npm install elasticsearch`
+2. Update the project 
+`npm update`
+2. Run Karma 
 `npm start`
 3. The output should read...
 ```
